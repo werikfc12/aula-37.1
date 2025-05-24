@@ -55,6 +55,15 @@ class Usuario {
   async compararSenha(senha) {
     return await bcrypt.compare(senha, this.senha);
   }
+  static atualizar(id, dadosNovos) {
+    const index = usuarios.findIndex((Usuario) => usuario.id === id);
+    usuarios(index) = { ...usuarios[index], ...dadosNovos };
+    return usuarios[index];
+  }
+  static async criptografar(senha) {
+    return await bcrypt.hash(senha, 10);
+  }
+
 }
 
 module.exports = { Usuario };

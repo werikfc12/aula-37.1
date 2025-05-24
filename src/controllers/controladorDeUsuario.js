@@ -70,10 +70,48 @@ class ControladorDeUsuario {
       if (error instanceof HttpError) {
         return res.status(error.status).json({ erro: error.message });
       }
-
+      
       res.status(500).json({ erro: error.message });
     }
   }
-}
+  atualizar(req, res){
+    try {
+      const id = req.params.id;
+      const usuario = servicoDeUsuario.pegarPeloID(id);
+      
+      if (usuario.length === 0) {
+        return res
+        .status (404)
+        .json({messagem: "nemhum usuario foi encontrado"});
+      }
+      const dadosNovos = req.body;
+      const usuarioAtualizado = servicoDeUsuario.atualizar(
+        
+        usuarioExistente,
+        dadosNovos
+      );
+      res.Status(200).json(usuarioAtualizado)
+    } catch (error) {
+      res.status(500).json({erro: error.message || "erro ao buscar usuario"});
+    }
+  }
 
+  
+  
+  
+  deletar (req, res) {
+    try {
+      const id = req.params.id;
+      servicoDeUsuario.deletar(id);
+      
+      res.status(204).json({message: "deletado com sucesso"});
+      
+    } catch (error) {
+      res
+      .status
+      .json({erro: error.message || "erro ao buscar usuarios."});
+    }
+  }
+  
+}
 module.exports = new ControladorDeUsuario();

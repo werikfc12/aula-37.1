@@ -9,4 +9,9 @@ rotasDeUsuario.get("/:id", controladorDeUsuario.pegarUmPeloID);
 rotasDeUsuario.post("/cadastrar", controladorDeUsuario.cadastrar);
 rotasDeUsuario.post("/conectar", controladorDeUsuario.conectar);
 
+rotasDeUsuario.put("/:id", controladorDeUsuario.atualizar);
 module.exports = rotasDeUsuario;
+
+
+
+

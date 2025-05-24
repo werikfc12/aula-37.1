@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const RepositorioDeUsuario = require("../repositories/repositorioDeUsuario");
 const { Usuario } = require("../models/Usuario");
 const { HttpError } = require("../errors/HttpError");
+const repositorioDeUsuario = require("../repositories/repositorioDeUsuario");
 
 class ServicoDeUsuario {
   buscarTodos() {
@@ -13,7 +14,7 @@ class ServicoDeUsuario {
     if (!id) {
       throw new Error("O ID não foi informado")
     }
-    
+
     return RepositorioDeUsuario.buscarPeloID(id);
   }
 
@@ -69,6 +70,20 @@ class ServicoDeUsuario {
 
     return token;
   }
+  atualizar(id, dados) {
+    const { nome, email, cpf, senha } = dados;
+    const dadosExistentes = this.pegarPeloID(id);
+
+
+    const dadosAtualizados = {
+    nome: nome ?? dadosExistentes.nome,
+    email: email ?? dadosExistentes.email,
+    cpf: cpf ?? dadosExistentes.cpf,
+    semha: senha ?? dadosExistentes.senha
+    };
+     return repositorioDeUsuario.atualizar(id, dadosAtualizados)
+  }
+ 
 }
 
 module.exports = new ServicoDeUsuario();
